@@ -18,10 +18,10 @@ cp-zookeeper:
     ##
     ## Size for Data dir, where ZooKeeper will store the in-memory database snapshots.
     dataDirSize: 10Gi
-    dataDirStorageClass: "openebs-hostpath"
+    dataDirStorageClass: "microk8s-hostpath"
     ## Size for data log dir, which is a dedicated log device to be used, and helps avoid competition between logging and snaphots.
     dataLogDirSize: 10Gi
-    dataLogDirStorageClass: "openebs-hostpath"
+    dataLogDirStorageClass: "microk8s-hostpath"
     
   # TODO: find correct security context for user in this zk-image  
   securityContext: 
@@ -52,7 +52,7 @@ cp-kafka:
   heapOptions: "-Xms512M -Xmx512M"
   persistence:
     enabled: true
-    storageClass: "openebs-hostpath"
+    storageClass: "microk8s-hostpath"
     size: 5Gi
     disksPerBroker: 1
   resources: {}
@@ -116,8 +116,9 @@ cp-kafka-rest:
 ## ------------------------------------------------------
 cp-kafka-connect:
   enabled: true
-  image: confluentinc/cp-kafka-connect
+  image: confluentinc/cp-kafka-connect-debezium-es
   imageTag: 6.1.0
+  imagePullPolicy: Never
   ## Optionally specify an array of imagePullSecrets. Secrets must be manually created in the namespace.
   ## https://kubernetes.io/docs/concepts/containers/images/#specifying-imagepullsecrets-on-a-pod
   imagePullSecrets:
