@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: claim1
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: local-path
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: nginx-test
+  labels:
+    name: nginx-test
+spec:
+  replicas: 1
+  selector:
+    name: nginx-test
+  template:
+    metadata:
+      labels:
+       name: nginx-test
+    spec:
+      containers:
+      - name: nginx-test
+        image: docker.io/nginx
+        volumeMounts:
+        - mountPath: /usr/share/nginx/html
+          name: nginx-data
+        ports:
+        - containerPort: 80
+      volumes:
+      - name: nginx-data
+        persistentVolumeClaim:
+          claimName: claim1

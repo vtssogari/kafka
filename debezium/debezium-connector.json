@@ -1,0 +1,14 @@
+{
+    "name": "dvdrental-connector",
+    "config": {
+        "connector.class": "io.debezium.connector.postgresql.PostgresConnector",
+        "tasks.max": "1",
+        "plugin.name": "pgoutput",
+        "database.server.name": "postgres-server",
+        "database.hostname": "${NODE_IP}",
+        "database.port": "${NODE_PORT}",
+        "database.user": "postgres",
+        "database.password": "${POSTGRES_PASSWORD}",
+        "database.dbname": "dvdrental"
+    }
+}
